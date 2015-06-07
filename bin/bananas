@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+require "bananas"
+require "optparse"
+
+ARGV << "-h" if ARGV.empty?
+
+options = {}
+o = OptionParser.new do |opts|
+  opts.banner = "usage: bananas.rb [options]"
+
+  opts.on("-m", "--module [MOD]", "The module to search for monkey patches. Required.") do |m|
+    options[:module] = m.capitalize
+  end
+
+  opts.on("-r", "--require X,Y,Z", "The list of dependencies to search with.") do |r|
+    options[:with] = Array( String(r).split(",") )
+  end
+
+  opts.on("-h", "--help", "Print this message.") do |h|
+    puts opts
+    exit
+  end
+end
+
+begin
+  o.parse!
+rescue
+  puts o
+  exit
+end
+
+if options[:module].nil?
+  puts o
+  exit
+end
+
+begin
+  options[:with].each {|r| require r } if options[:with]
+rescue LoadError
+  puts "fatal: Couldn't require dependencies. '#{options[:with].join}'"
+  exit
+end
+
+if Kernel.const_defined?(options[:module])
+  Bananas.monkey_patches(Kernel.const_get options[:module].capitalize)
+else
+  puts "fatal: Couldn't find a module. '#{options[:module]}'"
+  exit
+end
