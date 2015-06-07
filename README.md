@@ -1,6 +1,6 @@
 # Bananas
 
-Bananas is a library for displaying monkey patches defined on a given tree of objects. It uses simple criterion to introspect an object for externally-defined methods. It is intended to be used for debugging
+Bananas is a library for displaying monkey patches defined on a given tree of objects. It uses simple criterion to introspect an object for externally-defined methods. It is intended to be used for debugging.
 
 ## Installation
 
@@ -21,7 +21,7 @@ Bananas.monkey_patches
 
 or via the command line.
 
-```sh
+```
 $ bananas --help
 usage: bananas.rb [options]
     -m, --module [MOD]               The module to search for monkey patches. Required.

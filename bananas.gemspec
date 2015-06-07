@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   end
 
   spec.summary       = %q{A library that finds monkey patches.}
-  spec.description   = %q{Bananas is a library for displaying monkey patches defined on a given tree of objects. It uses simple criterion to introspect an object for externally-defined methods. It is intended to be used for debugging}
+  spec.description   = %q{Bananas is a library for displaying monkey patches defined on a given tree of objects. It uses simple criterion to introspect an object for externally-defined methods. It is intended to be used for debugging.}
   spec.homepage      = "https://github.com/nitroo/bananas"
   spec.license       = "MIT"
 
