@@ -9,10 +9,6 @@ Gem::Specification.new do |spec|
   spec.authors       = ["nitroo"]
   spec.email         = ["brysoncmyers@gmail.com"]
 
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "http://rubygems.org"
-  end
-
   spec.summary       = %q{A library that finds monkey patches.}
   spec.description   = %q{Bananas is a library for displaying monkey patches defined on a given tree of objects. It uses simple criterion to introspect an object for externally-defined methods. It is intended to be used for debugging.}
   spec.homepage      = "https://github.com/nitroo/bananas"

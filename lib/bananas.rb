@@ -5,7 +5,8 @@ module Bananas
   private_constant :GEMS
 
   module_function def monkey_patches(mod = Object)
-    mod.constants.map {|c| mod.const_get(c) }.push(mod)
+    mod.constants.map {|c| mod.const_get(c) }
+        .tap {|c| c.push(mod) unless c.include?(mod) }
         .keep_if {|c| c.respond_to?(:instance_methods) }
         .map {|c| Hash[object: c, methods: c.instance_methods(false)
         .map {|m| Hash[name: m, location: (Array(c.instance_method(m).source_location).first || next)] }.compact] }
