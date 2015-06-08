@@ -6,44 +6,41 @@ ARGV << "-h" if ARGV.empty?
 
 options = {}
 o = OptionParser.new do |opts|
-  opts.banner = "usage: bananas.rb [options]"
+  opts.banner      = "usage: bananas.rb [options]"
+  options[:module] = "Object"
+  options[:with]   = []
 
   opts.on("-m", "--module [MOD]", "The module to search for monkey patches. Required.") do |m|
     options[:module] = m.capitalize
+    Object.const_defined? options[:module] or raise TypeError
   end
 
   opts.on("-r", "--require X,Y,Z", "The list of dependencies to search with.") do |r|
-    options[:with] = Array( String(r).split(",") )
+    options[:with].concat String(r).split(",")
+    options[:with].each {|r| require r }
   end
 
   opts.on("-h", "--help", "Print this message.") do |h|
     puts opts
     exit
   end
+
+  opts.on("-v", "--version", "Print version information.") do |v|
+    puts Bananas::VERSION
+    exit
+  end
 end
 
 begin
   o.parse!
-rescue
-  puts o
-  exit
-end
 
-if options[:module].nil?
-  puts o
-  exit
-end
+  fail unless o.default_argv.empty?
 
-begin
-  options[:with].each {|r| require r } if options[:with]
+  Bananas.monkey_patches(Object.const_get options[:module])
 rescue LoadError
   puts "fatal: Couldn't require dependencies. '#{options[:with].join}'"
-  exit
-end
-
-if Kernel.const_defined?(options[:module])
-  Bananas.monkey_patches(Kernel.const_get options[:module].capitalize)
-else
+rescue TypeError
   puts "fatal: Couldn't find a module. '#{options[:module]}'"
-  exit
+rescue
+  puts o
 end
