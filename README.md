@@ -27,4 +27,4 @@ usage: bananas.rb [options]
     -m, --module [MOD]               The module to search for monkey patches. Required.
     -r, --require X,Y,Z              The list of dependencies to search with.
     -h, --help                       Print this message.
-```
+    -v, --version                    Print version information.
