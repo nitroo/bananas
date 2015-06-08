@@ -4,7 +4,7 @@ module Bananas
   GEMS = Gem::Specification.to_a.map(&:name).join
   private_constant :GEMS
 
-  module_function def monkey_patches(mod = Object)
+  def self.monkey_patches(mod = Object)
     mod.constants.map {|c| mod.const_get(c) }
         .tap {|c| c.push(mod) unless c.include?(mod) }
         .keep_if {|c| c.respond_to?(:instance_methods) }
