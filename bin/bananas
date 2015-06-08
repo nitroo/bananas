@@ -38,9 +38,9 @@ begin
 
   Bananas.monkey_patches(Object.const_get options[:module])
 rescue LoadError
-  puts "fatal: Couldn't require dependencies. '#{options[:with].join}'"
+  puts "fatal: Couldn't require dependencies '#{options[:with].join(", ")}'"
 rescue TypeError
-  puts "fatal: Couldn't find a module. '#{options[:module]}'"
+  puts "fatal: Couldn't find a module '#{options[:module]}'"
 rescue
   puts o
 end
